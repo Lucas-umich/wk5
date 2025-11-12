@@ -1,117 +1,132 @@
 /* --- Base (Mobile First) --- */
 .grid {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;                
+  flex-wrap: wrap;
+  gap: 20px;
+  height: auto;
+  box-sizing: border-box;
 }
 
+.grid > .card {
+  flex: 1 1 100%;
+  max-width: 100%;
+}
+
+/* Gallery styles */
 .gallery {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  align-items: flex-start;
+  height: auto;
+}
+
+.gallery > * {
+  max-width: 100%;
+  overflow: hidden;
+  border-radius: 24px;
 }
 
 .gallery img {
+  display: block;
+  width: 100%;
+  height: auto;
   flex-shrink: 1;
   flex-grow: 1;
-  flex-basis: 90%;  /* flex-basis practice */
+  flex-basis: 90%;
 }
 
-/* STUDENT CODE STARTS HERE */
-
-
-/* Part 2: Tablet View */
-
-@media (min-width: 768px) {
+/* Part 2: Tablet View (2-1-2-1) */
+@media (min-width: 768px) and (max-width: 1199px) {
   .grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;                            
-    grid-auto-rows: 520px;                 
+    grid-template-columns: 45% 45%;
+    justify-items: center;
+    gap: 50px;
+  }
+
+  .grid > div:nth-child(3n) {
+    grid-column: 1 / -1;
+    width: 50%;
+  }
+
+  .grid > div:nth-child(even){
+    background-color: blue;
   }
 
   .gallery {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
   }
 
-  .gallery img {
-    flex: 1 1 30%;
-  }
-
-  .grid div:nth-child(even) {
-    background-color: #f0f0f0;
+  .gallery img{
+    flex-basis: 30%;
   }
 }
 
-
 /* Part 3: Desktop View */
-
 @media (min-width: 1200px) {
   .grid {
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-    gap: 20px;
+  }
+
+  .grid > .card:nth-child(3n) {
+    flex: 1 1 calc(33.333% - 20px);
+    max-width: calc(33.333% - 20px);
+  }
+
+  .grid > *:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   }
 
   .gallery {
-    justify-content: space-between;
+    gap: 1rem;
+    justify-content: space-around;
   }
 
-  .gallery img {
+  .gallery img{
     flex: 1 1 200px;
-  }
-
-
-  .grid div:hover {
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
   }
 }
 
 
 /* Part 4: Print View */
-
 @media print {
-  body {
-    background: white;
-    color: black;
-  }
+  body { background: #fff; color: #000; }
+  header, nav, footer { display: none; }
 
-  .gallery {
+  .gallery{
     display: none;
   }
 
-  .grid {
+  .grid{
     grid-template-columns: 1fr;
   }
 
-  .grid div {
-    border: 1px solid black;
+  .grid > div {
+    border: 1px red solid;
     page-break-inside: avoid;
   }
 }
 
-
-/* Part 5: User Preferences */
-
+/* Part 5: User Preferences — Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
-  .grid div:hover {
+  .grid > div:hover{
     box-shadow: none;
+  }
+
+  .gallery img{
     transform: none;
   }
+
 }
 
+/* Color Scheme (Dark / Light) */
 @media (prefers-color-scheme: dark) {
-  body {
-    background: #111;
-    color: #eee;
-  }
-
-  .grid div {
-    background: #111;
-    border: 1px solid #EB5B00;
-  }
+  :root { color-scheme: dark; }
+  body { background: #111; color: #eee; }
+  .grid > div { background: #1a1a1a; border: 1px solid #eb5600;  }
 }
 
-body {
-  background: white !important;
-  color: black !important;
-}
+
+
